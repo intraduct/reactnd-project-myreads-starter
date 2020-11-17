@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const SearchBooks = () => (
+const OpenSearch = () => (
     <Link
         to="/search"
         className="open-search">
@@ -11,4 +11,4 @@ const SearchBooks = () => (
     </Link>
 )
 
-export default SearchBooks;
+export default OpenSearch;

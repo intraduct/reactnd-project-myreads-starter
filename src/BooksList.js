@@ -1,7 +1,7 @@
 import React from 'react'
 import TitleBar from './TitleBar'
 import BooksListContent from './BooksListContent'
-import SearchBooks from './SearchBooks'
+import OpenSearch from './OpenSearch'
 
 const BooksList = (props) => (
     <div className="list-books">
@@ -9,7 +9,7 @@ const BooksList = (props) => (
         <BooksListContent 
         books={props.books}
         handleShelfChanged={props.handleShelfChanged} />
-        <SearchBooks />
+        <OpenSearch />
     </div>
 )
 
