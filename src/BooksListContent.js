@@ -6,13 +6,16 @@ const BooksListContent = (props) => (
         <div>
             <BookShelf
                 title="Currently Reading"
-                books={props.books.filter(book => book.shelf === 'currentlyReading')} />
+                books={props.books.filter(book => book.shelf === 'currentlyReading')} 
+                handleShelfChanged={props.handleShelfChanged} />
             <BookShelf
                 title="Want to Read"
-                books={props.books.filter(book => book.shelf === 'wantToRead')} />
+                books={props.books.filter(book => book.shelf === 'wantToRead')} 
+                handleShelfChanged={props.handleShelfChanged} />
             <BookShelf
                 title="Read"
-                books={props.books.filter(book => book.shelf === 'read')} />
+                books={props.books.filter(book => book.shelf === 'read')}
+                handleShelfChanged={props.handleShelfChanged} />
         </div>
     </div>
 )

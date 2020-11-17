@@ -6,7 +6,9 @@ import SearchBooks from './SearchBooks'
 const BooksList = (props) => (
     <div className="list-books">
         <TitleBar />
-        <BooksListContent books={props.books} />
+        <BooksListContent 
+        books={props.books}
+        handleShelfChanged={props.handleShelfChanged} />
         <SearchBooks />
     </div>
 )

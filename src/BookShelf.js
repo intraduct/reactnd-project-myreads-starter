@@ -8,12 +8,7 @@ const BookShelf = (props) => (
             <ol className="books-grid">
                 {props.books.map(book => (
                     <li key={book.id}>
-                        <Book
-                            coverUrl={book.imageLinks.thumbnail}
-                            title={book.title}
-                            // TODO multiple authors
-                            author={book.authors[0]}
-                        />
+                        <Book book={book} handleShelfChanged={props.handleShelfChanged}/>
                     </li>
                 ))}
             </ol>
