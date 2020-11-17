@@ -31,7 +31,10 @@ class BooksApp extends React.Component {
     const books = this.state.books.slice();
     books
       .filter(book => book.id === id)
-      .forEach(book => book.shelf = newShelf);
+      .forEach(book => {
+        book.shelf = newShelf;
+        BooksAPI.update(book, newShelf);
+      });
     this.setState(() => ({
       books
     }))
