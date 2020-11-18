@@ -6,64 +6,58 @@ import BooksList from './BooksList'
 import SearchBooks from './SearchBooks'
 
 class BooksApp extends React.Component {
-  /**
-   * TODO: Instead of using this state variable to keep track of which page
-   * we're on, use the URL in the browser's address bar. This will ensure that
-   * users can use the browser's back and forward buttons to navigate between
-   * pages, as well as provide a good URL they can bookmark and share.
-   */
-  state = {
-    books: []
-  }
+    state = {
+        books: []
+    }
 
-  componentDidMount() {
-    BooksAPI.getAll().then(
-      books => {
+    componentDidMount() {
+        BooksAPI.getAll().then(
+            books => {
+                this.setState(() => ({
+                    books
+                }))
+            }
+        )
+    }
+
+    handleShelfChanged = (updatedBook) => {
+        let isNewBook = true;
+        const books = this.state.books.slice();
+        books
+            .filter(book => book.id === updatedBook.id)
+            .forEach(book => {
+                book.shelf = updatedBook.shelf;
+                isNewBook = false;
+            });
+
+        isNewBook && books.push(updatedBook);
+
         this.setState(() => ({
-          books
+            books
         }))
-      }
-    )
-  }
 
-  handleShelfChanged = (updatedBook) => {
-    let isNewBook = true;
-    const books = this.state.books.slice();
-    books
-      .filter(book => book.id === updatedBook.id)
-      .forEach(book => {
-        book.shelf = updatedBook.shelf;
-        isNewBook = false;
-      });
+        BooksAPI.update(updatedBook, updatedBook.shelf);
+    }
 
-    isNewBook && books.push(updatedBook);
+    render() {
+        return (
+            <div className="app">
+                <Route path='/search' render={({ history }) => (
+                    <SearchBooks
+                        myBooks={this.state.books}
+                        onClose={() => history.push('/')}
+                        handleShelfChanged={this.handleShelfChanged} />
+                )} />
 
-    this.setState(() => ({
-      books
-    }))
+                <Route exact path='/'>
+                    <BooksList
+                        books={this.state.books}
+                        handleShelfChanged={this.handleShelfChanged} />
+                </Route>
 
-    BooksAPI.update(updatedBook, updatedBook.shelf);
-  }
-
-  render() {
-    return (
-      <div className="app">
-        <Route path='/search' render={({ history }) => (
-          <SearchBooks
-            myBooks={this.state.books}
-            onClose={() => history.push('/')}
-            handleShelfChanged={this.handleShelfChanged} />
-        )} />
-
-        <Route exact path='/'>
-          <BooksList
-            books={this.state.books}
-            handleShelfChanged={this.handleShelfChanged} />
-        </Route>
-
-      </div>
-    )
-  }
+            </div>
+        )
+    }
 }
 
 export default BooksApp
