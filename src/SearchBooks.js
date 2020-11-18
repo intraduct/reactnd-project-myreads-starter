@@ -17,7 +17,7 @@ class SearchBooks extends React.Component {
         });
         BooksAPI.search(value).then(books => {
             if (Array.isArray(books)) {
-                books = books.map(book => mergeMyBooks(book));
+                books = books.map(book => this.mergeMyBooks(book));
                 this.setState({ books })
             } else {
                 this.setState({ books: [] })
