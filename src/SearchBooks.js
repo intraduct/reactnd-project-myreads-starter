@@ -1,6 +1,7 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
-import Book from './Book'
+import SearchBooksBar from './SearchBooksBar'
+import SearchBooksResult from './SearchBooksResult'
 
 class SearchBooks extends React.Component {
 
@@ -16,42 +17,28 @@ class SearchBooks extends React.Component {
         });
         BooksAPI.search(value).then(books => {
             if (Array.isArray(books)) {
+                books = books.map(book => mergeMyBooks(book));
                 this.setState({ books })
             } else {
-                this.setState({books: []})
+                this.setState({ books: [] })
             }
         });
     }
 
-    getFromMyBooks = (book) => {
+    mergeMyBooks = (book) => {
         return this.props.myBooks.filter(b => b.id === book.id)[0] || book;
     }
 
     render() {
         return (
             <div className="search-books">
-                <div className="search-books-bar">
-                    <button className="close-search" onClick={this.props.onClose}>Close</button>
-                    <div className="search-books-input-wrapper">
-                        <input
-                            type="text"
-                            placeholder="Search by title or author"
-                            value={this.state.value}
-                            onChange={this.handleValueChanged} />
-                    </div>
-                </div>
-                <div className="search-books-results">
-                    <ol className="books-grid">
-                        {this.state.books
-                        .map(book => this.getFromMyBooks(book))
-                        .map(book => {
-                            return (
-                            <li key={book.id}>
-                                <Book book={book} handleShelfChanged={this.props.handleShelfChanged} />
-                            </li>
-                        )})}
-                    </ol>
-                </div>
+                <SearchBooksBar
+                    onClose={this.props.onClose}
+                    value={this.state.value}
+                    handleValueChanged={this.handleValueChanged} />
+                <SearchBooksResult
+                    books={this.state.books}
+                    handleShelfChanged={this.props.handleShelfChanged} />
             </div>
         );
     }
