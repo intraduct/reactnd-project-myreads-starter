@@ -1,8 +1,9 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const SearchBooksBar = (props) => (
     <div className="search-books-bar">
-        <button className="close-search" onClick={props.onClose}>Close</button>
+        <Link to="/" className="close-search">Close</Link>
         <div className="search-books-input-wrapper">
             <input
                 type="text"
